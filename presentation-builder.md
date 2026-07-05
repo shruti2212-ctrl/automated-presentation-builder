@@ -419,11 +419,12 @@ print(f"Total slides: {len(prs.slides)}")
 
 ### Critical Build Rules:
 - Every composition function uses the SAME layout grid, spacing, and radius tokens
-- Colours come ONLY from brand tokens — never hardcoded hex
+- Colours come ONLY from brand tokens - never hardcoded hex
 - Fonts come ONLY from brand tokens
+- **Charts: use custom-drawn bars (rounded_rect shapes), NOT native PowerPoint charts (add_chart).** Native charts have uncontrollable defaults (black axis labels, white backgrounds) that break on dark/branded slides. Custom bars give full control over colour, spacing, and labels.
 - Arc/corner assets loaded from `brand_assets/arcs/` (generated in Phase 0)
 - Icons loaded from `brand_assets/icons/` (recoloured in Phase 0)
-- If photo slides approved but no images provided → skip those compositions
+- If photo slides approved but no images provided - skip those compositions
 
 ---
 
