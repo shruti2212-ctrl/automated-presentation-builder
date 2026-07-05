@@ -136,7 +136,7 @@ def generate_arc_assets(brand_colours, output_dir):
 Save to `pres_build/brand_assets/icons/`.
 
 **Otherwise (website or .pptx source):** Copy the base 109-icon set from
-`im_build/brand_icons/` and recolour to brand primary:
+`pres_build/brand_assets/base_icons/` and recolour to brand primary:
 
 ```python
 from PIL import Image, ImageOps
@@ -436,6 +436,23 @@ print(f"Total slides: {len(prs.slides)}")
   ```
   This prevents overflow regardless of category count. If group_gap < 0.15, the chart has too many categories - split across two slides or use a horizontal layout instead.
 - **Key takeaway text (right side) must stay within max 3 short bullets (under 35 chars each).** If it overflows, shorten or remove.
+- **Card grid sizing must be dynamic.** Calculate card dimensions from grid layout and content:
+  ```python
+  # For card_grid layouts, compute card height from body text length
+  content_area_w = 9.0  # full width available
+  gap = 0.2
+  cols = 3 if len(cards) > 4 else 2
+  rows = math.ceil(len(cards) / cols)
+  card_w = (content_area_w - (cols - 1) * gap) / cols
+  available_h = 3.6  # body area height
+  card_h = (available_h - (rows - 1) * gap) / rows
+
+  # Validate: if any card body exceeds ~80 chars, either:
+  # 1. Reduce font size to T_SMALL (Pt(8)) for that card
+  # 2. If still overflows at T_SMALL, truncate or split across two slides
+  max_body_chars = int((card_w - 0.5) * (card_h - 0.6) * 18)  # rough chars that fit
+  ```
+  Never hardcode card dimensions. Always derive from number of cards and available space.
 - Arc/corner assets loaded from `brand_assets/arcs/` (generated in Phase 0)
 - Icons loaded from `brand_assets/icons/` (recoloured in Phase 0)
 - If photo slides approved but no images provided - skip those compositions
