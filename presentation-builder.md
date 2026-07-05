@@ -422,6 +422,20 @@ print(f"Total slides: {len(prs.slides)}")
 - Colours come ONLY from brand tokens - never hardcoded hex
 - Fonts come ONLY from brand tokens
 - **Charts: use custom-drawn bars (rounded_rect shapes), NOT native PowerPoint charts (add_chart).** Native charts have uncontrollable defaults (black axis labels, white backgrounds) that break on dark/branded slides. Custom bars give full control over colour, spacing, and labels.
+- **Bar chart sizing must be dynamic.** Calculate bar width and gap from available space and number of categories:
+  ```python
+  chart_area_w = 6.0  # max width for bars (leaves room for key takeaway on right)
+  n = len(categories)
+  pair_gap = 0.04
+  group_w_base = pair_gap  # minimum: just the gap between paired bars
+  # Compute: total space = n * group_w + (n-1) * group_gap
+  # bar_w = constrain between 0.25 and 0.5
+  bar_w = min(0.5, max(0.25, (chart_area_w / n - pair_gap) / 2.5))
+  group_w = bar_w * 2 + pair_gap
+  group_gap = (chart_area_w - n * group_w) / max(1, n - 1)
+  ```
+  This prevents overflow regardless of category count. If group_gap < 0.15, the chart has too many categories - split across two slides or use a horizontal layout instead.
+- **Key takeaway text (right side) must stay within max 3 short bullets (under 35 chars each).** If it overflows, shorten or remove.
 - Arc/corner assets loaded from `brand_assets/arcs/` (generated in Phase 0)
 - Icons loaded from `brand_assets/icons/` (recoloured in Phase 0)
 - If photo slides approved but no images provided - skip those compositions
