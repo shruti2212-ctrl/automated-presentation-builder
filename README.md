@@ -27,12 +27,22 @@ See [`samples/`](./samples/) for a generated deck:
 
 - **Shruti_Revolut_WhyHireMe_Portfolio.pptx** - A "Why hire me" application deck using Revolut's brand (extracted from their 2025 Annual Report PDF). Features: dark mode, bar chart (JD vs evidence scoring), doughnut chart (experience breakdown), connected timeline, 2x2 card grids.
 
+## Repo structure
+
+```
+├── presentation-builder.md   # The skill (install to .claude/skills/)
+├── base_icons/               # 109 PNG icons, recoloured per brand at build time
+├── samples/                  # Example output decks
+└── README.md
+```
+
 ## Tech
 
 - Python + `python-pptx` for generation
 - Claude AI for research, content writing, and orchestration
-- Pillow for asset generation (arcs, icons)
+- Pillow for asset generation (arcs, icons recolouring)
 - Brand tokens stored as JSON for reuse
+- Dynamic sizing: bar charts and card grids scale to content (no overflow)
 
 ## Composition library
 
