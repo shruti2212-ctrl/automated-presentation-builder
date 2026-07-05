@@ -43,7 +43,7 @@ See [`samples/`](./samples/) for a generated deck:
 | `card_grid_2x2` / `3x2` | Features, services, requirements |
 | `bar_chart` | Comparisons, scoring |
 | `doughnut_chart` | Breakdowns, concentration |
-| `timeline` | Career, milestones, history |
+| `timeline` | milestones, history |
 | `two_column_story` | Narrative + structured data |
 | `investment_thesis` | Why invest / why hire |
 | `full_table` | Financial data, comparisons |
